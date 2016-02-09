@@ -1,3 +1,4 @@
-[[https://github.com/cangulec/instamasta/blob/master/logo.png|alt=Instamasta]]
+![Instamasta](https://github.com/cangulec/instamasta/blob/master/logo.png)
+
 # Instamasta
 Graphing social media activity and quantifying self-absorption
