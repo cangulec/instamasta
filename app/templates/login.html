@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>InstaMasta</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+   <script src="http://aishek.github.io/jquery-animateNumber/javascripts/jquery.easing.1.3.js"></script>
+    <script src="http://aishek.github.io/jquery-animateNumber/javascripts/jquery.color.js"></script>
+    <script src="http://aishek.github.io/jquery-animateNumber/javascripts/jquery.animateNumber.js"></script>
+  <style>
+  .displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto }
+    h1{
+        text-align: center;
+    }
+   td{font-size:19px;
+      padding-left:10px;
+	padding-right:10px}
+table {
+    margin: 0 auto; /* or margin: 0 auto 0 auto */
+  }
+  </style>
+</head>
+<script>
+$(function() {
+            var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',')
+  $('#lines').animateNumber({ number: {{personCount}},
+easing: 'easeInQuad',
+numberStep: comma_separator_number_step  },3000);
+ $('#post').animateNumber({ number: {{postCount}},
+easing: 'easeInQuad',
+numberStep: comma_separator_number_step  },4000);
+// Handler for .ready() called.
+});
+function validateForm() {
+    var id = document.getElementById('search').value;
+    if (( (id%1)===0) && id > 0 && id < {{personCount}} ) {
+        location.href='http://instamasta.com/dashboard/'+id;
+    }else{
+	alert("Please enter a valid id");}
+}
+</script>
+<body>
+<br><br>
+<img class="displayed" src="/static/logo.png">
+<h1 class"tagline">Explore <span id="lines">0</span> users and <span id="post">0</span> posts<h1>
+<div class="container">
+
+<div class="input-group">
+   <input placeholder="Please input a user id..."  id="search" type="text" class="form-control" required>
+   <span class="input-group-btn">
+        <button onclick="validateForm()"
+ class="btn btn-default" type="button">Go!</button>
+   </span>
+</div>
+
+
+<div style="font-size:15px;"id="footer">
+<br>
+<a href="/selfie">Quantifying Self(ie)-absorption</a> / <a href="/static/insight-can-gulec.pdf">Presentation</a> <a href="http://www.slideshare.net/CanGulec/instamasta">(Alt)</a>
+</div>
+
+
+<h1 class"tagline">Calculate the shortest path between two users<h1>
+<table>
+<tr>
+    <td>From</td>
+    <td>To</td>
+    <td></td>
+</tr>
+<tr>
+    <td><input type="text" id="from"></td>
+    <td><input type="text" id="to"></td>
+<!--  <td>
+<label class="radio-inline"><input type="radio" name="optradio">Directional</label>
+<label class="radio-inline"><input type="radio" name="optradio">Non-Directional</label>
+</td> -->
+<td><button onclick="location.href='http://instamasta.com/shortestpath/'+document.getElementById('from').value+'/'+document.getElementById('to').value";" class="btn btn-default" type="button">Go!</button></td>
+</tr>
+
+
+
+
+</div>
+
+</body>
+</html>
+

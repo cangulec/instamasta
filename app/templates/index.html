@@ -1,0 +1,136 @@
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+  <script src="http://getspringy.com/springy.js"></script>
+  <script src="http://getspringy.com/springyui.js"></script>
+<script>
+var graph = new Springy.Graph();
+
+var dennis = graph.newNode({
+  label: '{{thisUser[0]}}',
+  ondoubleclick: function() { console.log("Hello!"); }
+});
+
+    {% for follower in followers %}
+	if (typeof user{{follower[2]}} == 'undefined') {
+	var user{{follower[2]}} = graph.newNode({label: '{{follower[0]}}'});
+	}    
+   	graph.newEdge( user{{follower[2]}},dennis, {color: '#00A0B0'});
+     {% endfor %}
+    {% for follows in followings %}
+       if (typeof user{{follows[2]}} == 'undefined') {
+       var user{{follows[2]}} = graph.newNode({label: '{{follows[0]}}'});
+       }
+	graph.newEdge( dennis,user{{follows[2]}}, {color: '#EDC951'});
+    {% endfor %}
+
+jQuery(function(){
+  var springy = window.springy = jQuery('#springydemo').springy({
+    graph: graph,
+    nodeSelected: function(node){
+      console.log('Node selected: ' + JSON.stringify(node.data));
+    }
+  });
+});
+</script>
+  <style>
+h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 75px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
+h2 { color: #111; font-family: 'Open Sans', sans-serif; font-size: 30px; font-weight: 300; line-height: 32px; margin: 0 0 72px; text-align: center; }   
+#col1 {
+    display: inline-block;
+    text-align: center;
+    width:50%;
+}
+
+#col2 {
+    display: inline-block;
+    text-align: center;
+    width:50%;
+}
+.box{
+display:block}
+
+#canvas-container {
+   width: 100%;
+   text-align:center;
+}
+
+canvas {
+   display: inline;
+}
+</style>
+    <title>Dashboard - {{ thisUser[0] }}</title>
+	<h1>Hello {{thisUser[0]}} </h1><br><br>
+ <div id="col1"><h2>Following: {{followingcount}}</h2></div><div id="col2"><h2>Followers:{{followercount}}</h2> </div> 
+</head>
+  <body>
+<div id="canvas-container">
+<canvas id="springydemo" width="1000px" height="480" />
+</div>
+<div class="box">
+<div style="float:left;width:45%;margin-left:5%"class"col-xs-6">
+<div class="table-responsive">    
+<h3>Following</h3>
+    <p>Users that you follow are:</p>
+    <table class="table table-hover">  
+    <thead><tr><td>Name</td><td>Username</td></tr></thead>
+    {% for follows in followings %}
+    <tr>
+	   <td> <a href="http://instamasta.com/dashboard/{{follows[2]}}" >{{ follows[0] }}</a> </td>
+	   <td>{{ follows[1] }} </td>
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+</div>
+<div style="float:left;width:45%;margin-left:5%" class"col-xs-6">
+<div class="table-responsive">    
+<h3>Followers </h3>
+    <p>Users that follow you are:</p>
+    <table class="table table-hover">
+   <thead> <tr><td>Follower Name</td><td>Username</td></tr></thead>
+    {% for follower in followers %}
+    <tr>
+           <td><a href="http://instamasta.com/dashboard/{{follower[2]}}" >{{ follower[0] }}</a> </td>
+           <td>{{ follower[1] }} </td>
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+</div>
+</div>
+<br style="clear:both" />
+{% if posts%}
+<div style="width:60%;margin-left:auto;margin-right:auto;"class"col-xs-6">
+<div class="table-responsive">
+<h3>Your Posts</h3>
+ <table class="table table-hover">
+    <thead><tr><td>Post ID</td><td>Likes</td></tr></thead>
+    {% for post in posts[0] %}
+    <tr>
+           <td><a href="/post/{{post[1]}}">{{ post[1] }} </a></td>
+           <td>{{ post[2] }} </td>
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+</div>
+{% endif %}
+<div style="margin-left:80px;margin-right:80px">
+<h3>Friend Recommendations</h3>
+<table class="table table-hover" >
+    <tr><td>Post Name</td><td>Id</td></tr>
+    {% for rec in recommendations %}
+    <tr>
+           <td><a href="/dashboard/{{rec[2]}}" >{{ rec[0] }}</a> </td>
+           <td>{{ rec[1] }} </td>
+    </tr>
+    {% endfor %}
+    </table>  
+</div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://getspringy.com/springy.js"></script>
+  <script src="http://getspringy.com/springyui.js"></script>
+<script>
+var graph = new Springy.Graph();
+
+var dennis = graph.newNode({
+  label: 'This Post',
+  ondoubleclick: function() { console.log("Hello!"); }
+});
+
+    {% for liker in likername %}
+	if (typeof user{{liker[2]}} == 'undefined') {
+	var user{{liker[2]}} = graph.newNode({label: '{{liker[0]}}'});
+	}
+   	graph.newEdge( user{{liker[2]}},dennis, {color: '#00A0B0'});
+    {% endfor %}
+jQuery(function(){
+  var springy = window.springy = jQuery('#springydemo').springy({
+    graph: graph,
+    nodeSelected: function(node){
+      console.log('Node selected: ' + JSON.stringify(node.data));
+    }
+  });
+});
+</script>
+  <style>
+h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 75px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
+h2 { color: #111; font-family: 'Open Sans', sans-serif; font-size: 30px; font-weight: 300; line-height: 32px; margin: 0 0 72px; text-align: center; }
+#col1 {
+    display: inline-block;
+    text-align: center;
+    width:50%;
+}
+
+#col2 {
+    display: inline-block;
+    text-align: center;
+    width:50%;
+}
+.box{
+display:block}
+
+#canvas-container {
+   width: 100%;
+   text-align:center;
+}
+
+canvas {
+   display: inline;
+}
+</style>
+
+</head>
+  <body>
+<div id="canvas-container">
+<canvas id="springydemo" width="1000px" height="480" />
+</div>
+<div class="box">
+<div style="float:left;width:45%;margin-left:5%"class"col-xs-6">
+<div class="table-responsive">
+<h3>Liked by:</h3>
+    <table class="table table-hover">
+    <thead><tr><td>Name</td><td>Username</td></tr></thead>
+    {% for liker in likername %}
+    <tr>
+	   <td><a href="/user/{{liker[2]}}">{{ liker[0] }}</a> </td>
+	   <td>{{ liker[1] }} </td>
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+</div>
+
+</body>
+</html>
