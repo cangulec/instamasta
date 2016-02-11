@@ -6,9 +6,9 @@ InstaMasta provides summary analytics, friend recommendations and quantifies lev
 
 InstaMasta uses Neo4j as its primary database. The data pipeline is as follows:
 
-*The data is generated using csvSim.py script and placed in hdfs
-*pySpark parses the data to fit the format that is expected by neo4j-import tool
-*neo4j-import tool pushes the data into the database
-*Front-end uses Flask, and directly queries the database as information is needed
+* The data is generated using csvSim.py script and placed in hdfs
+* pySpark parses the data to fit the format that is expected by neo4j-import tool
+* neo4j-import tool pushes the data into the database
+* Front-end uses Flask, and directly queries the database as information is needed
 
 # Quantifying self-absorption
