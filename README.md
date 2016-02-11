@@ -15,6 +15,6 @@ The data pipeline is as follows:
 
 InstaMasta has a very naive approach to quantifying self-absorption. Once every photo of all the friends of the user is downloaded to the server, face_detect.py script goes through each picture and detects number of faces using a pre-trained haar cascade. Depending on the number of faces, the picture is then classified as:
 
-* Social
-* Selfie
-* Artsy
+* Social (faceCount > 1)
+* Selfie (faceCount = 1)
+* Artsy (faceCount = 0)
